@@ -1,0 +1,117 @@
+###Exercises
+
+
+>Create a new repository on GitHub to hold your assignments for the Databases module. Create a new branch for Checkpoint 1. Submit your answers.
+
+>What data types do each of these values represent?
+
+* "A Clockwork Orange"
+
+string
+
+
+* 42
+
+integer
+
+
+* 09/02/1945
+
+date
+
+* 98.7
+
+float
+
+
+* $15.99
+
+float
+
+
+>Explain when a database would be used. Explain when a text file would be used.
+
+Databases can handle querying tasks, so that files don't have to be iterated through manually. Databases can handle very complicated queries. Databases can handle indexing tasks. Databases can handle multiprocess/multiheadded access. Databases can handle access from network. Databases can watch for data integrity. Databases can update data easily. Databases are reliable. Databases can handle transactions and concurrent access. 
+
+Depending on the domain-specific application needs, text files can be accessed extremely fast, efficiently, and provide all of the file access capabilities of the operating system's file system. If a programmer requires concurrency and/or non-sequential reading and writing, a database might be a better choice.
+
+>Describe one difference between SQL and other programming languages.
+
+SQL is a declarative rather than a procedural language. That means that users don't have to define an algorithm for how the database should search. Rather, the user tells the database what they are looking for and the database engine determines the most efficient way to return the data.
+
+>In your own words, explain how the pieces of a database system fit together at a high level.
+
+* Hardware - 
+
+Hardware is the computer, hard disks, I/O channels, and any other physical component involved before any data can be successfully stored in the computer's memory. 
+
+* Software - 
+
+Software is the main component, the program that controls everything. It is the "wrapper" around the physical database which provides an interface for the user to store, access, and update data.
+
+* Data - 
+
+Data is why databases were created, so that data could be stored and utilized. A typical database stores both data and metadata, which is basically data about the data. For instance, if we store "Name" in a database, the database will also store when the name was stored, the size of the name, how it is stored related to other data or if it is independent - all of this information would be considered metadata.
+
+* Procedures -
+
+Procedures are the general instructions to use a database management system. This includes procedures to setup and install the system, to login and logout, and to manage the databases, take backups, generate reports, and more.
+
+* Database Access Language - 
+
+The access language is a simple language desinged tow rite commands to access, insert, update, and delete data stored in a database. A user can write commands in the Database Access Lanugage and subit it to the management system for execution, which is then translated and executed by the database management system. Users can create databases, tables, insert data, fetch data, update data, and delete data using the access language.
+
+
+>Explain the meaning of table, row, column, and value.
+
+
+>List three data types that can be used in a table.
+
+
+
+>Given this payments table, provide an English description of the following queries and include their results:
+
+```
+
+     SELECT date, amount
+     FROM payments;
+
+     SELECT amount
+     FROM payments
+     WHERE amount > 500;
+
+     SELECT *
+     FROM payments
+     WHERE payee = 'Mega Foods';
+
+```
+
+1. We select two columns, date and amount, from the payments table. The output is the date column and the amount column.
+
+2. We select one column, amount, from the payments table, where the amount is greater than 500. The output is 1500.00.
+
+3. We select all columns from the payments table where the payee is 'Mega Foods'. The output is 5/15/2016, Mega Foods, 124.93, Groceries.
+ 
+>Given this users table, write SQL queries using the following criteria and include the output:
+
+The email and sign-up date for the user named DeAndre Data.
+The user ID for the user with email 'aleesia.algorithm@uw.edu'.
+All the columns for the user ID equal to 4.
+
+SELECT email, signup
+FROM users
+WHERE name = 'DeAndre Data'
+
+output: datad@comcast.net, 2008-01-20
+
+SELECT userid
+FROM users
+WHERE email = 'aleesia.algorithm@uw.edu'
+
+output: 1
+
+SELECT *
+FROM users
+WHERE userid = 4
+
+output: 4, Brandy Boolean, bboolean@nasa.gov, 1999-10-15
