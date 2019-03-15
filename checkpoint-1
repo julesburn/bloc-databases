@@ -64,9 +64,13 @@ The access language is a simple language desinged tow rite commands to access, i
 
 >Explain the meaning of table, row, column, and value.
 
+The table holds data. Columns organize what is stored in the table and rows represent individual items in the table. Each cell contains a value, or a piece of information described by the column name.
+
 
 >List three data types that can be used in a table.
 
+
+String, intenger, float
 
 
 >Given this payments table, provide an English description of the following queries and include their results:
