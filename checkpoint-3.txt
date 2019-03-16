@@ -1,0 +1,214 @@
+###Exercises
+
+
+>Use the commands above to complete the following tasks, and submit the SQL statements. Real-world examples must be distinct from those used in the text.
+
+
+
+>List the commands for adding, updating, and deleting data.
+
+Adding: INSERT INTO tableName (columnName1, columnName2, columnName3, etc.)
+
+Updating: UPDATE tableName SET columnName1 = updateValue WHERE columnName2 = originalValue 
+
+Deleting: DELETE FROM tableName WHERE columnName = originalValue
+
+
+>Explain the structure for each type of command.
+
+Each command uses the structure of declaring the action that the user wants to take, then indicating which table the user will be interacting with, narrowing then to specific columns, and for the update and delete actions, specific rows and cells within columns.
+
+
+>What are some of the data types that can be used in tables? Give a real-world example of each type.
+
+Strings - Names, Animal Breeds, Book Titles
+
+Integers - Quantities, Votes, Number of Cats
+
+Floats - Weights, Sizes, Number of Kangaroos
+
+Dates - Birthdates, Store Opening Dates, Anniversaries, Death Dates
+
+Currency - Yen, Dollars, Euros, Pesos, Rubles
+
+Timestamp - Times Pictures Were Taken, Times Items Were Clicked, Time Little Brother Came Home Late (Again)
+
+
+>Decide how to create a new table to hold a list of people invited to a wedding dinner. The table needs to have first and last names, whether they sent in their RSVP, the number of guests they are bringing, and the number of meals (1 for adults and 1/2 for children).
+
+>Which data type would you use to store each of the following pieces of information?
+
+* First and last name.
+
+String - text
+
+* Whether they sent in their RSVP.
+
+Boolean
+
+* Number of guests.
+
+Integer
+
+* Number of meals.
+
+Floating point 
+
+>Write a command that creates the table to track the wedding dinner.
+
+```
+  CREATE TABLE weddingGuests (
+      name text,
+      RSVP boolean,
+      guests int
+      meals float2
+  );
+```
+
+>Write a command that adds a column to track whether the guest sent a thank you card.
+
+```
+INSERT INTO weddingGuests (thankYou, boolean);
+```
+
+>You have decided to move the data about the meals to another table, so write a command to remove the column storing the number of meals from the wedding table.
+
+```
+ALTER TABLE weddingGuests DROP COLUMN meals
+```
+
+>The guests will need a place to sit at the reception, so write a command that adds a column for table number.
+
+```
+INSERT INTO weddingGuests (tableNumber, int)
+```
+
+>The wedding is over and we do not need to keep this information, so write a command that deletes the table numbers from the database.
+
+```
+ALTER TABLE weddingGuests DROP COLUMN tableNumber
+```
+
+>Write a command to create a new table to hold the books in a library with the columns ISBN, title, author, genre, publishing date, number of copies, and available copies.
+
+```
+  CREATE TABLE books (
+      ISBN integer,
+      title text,
+      author text,
+      genre text,
+      publishDate date,
+      quantity integer,
+      quantityAvailable integer,
+
+  );
+```
+
+
+
+>Find three books and add their information to the table.
+
+```
+INSERT INTO books (ISBN, title, author, genre, publishDate, quantity, quantityAvailable)
+VALUES
+(9781781102459, Harry Potter and the Sorcerer's Stone, J.K. Rowling, Fantasy, 6/26/1997, 50, 12)
+(9788703069722, All the Light We Cannot See, Anthony Doerr, Historical Fiction, 5/6/2014, 15, 7)
+(9788471891938, The Mysterious Island, Jules Verne, Fantasy, 1/1/1874, 6, 3);
+
+```
+
+>Someone has just checked out one of the books. Change the number of available copies to 1 fewer.
+
+```
+UPDATE books SET quantityAvailable=11 WHERE ISBN=9781781102459;
+
+```
+
+
+>Now one of the books has been added to the banned books list. Remove it from the table.
+
+While censorship in a public library makes me uncomfortable:
+
+```
+DELETE FROM books WHERE title=The Mysterious Island;
+```
+
+>Write a command to make a new table to hold spacecrafts. Information should include id, name, year launched, country of origin, a brief description of the mission, orbiting body, if it is currently operating, and its approximate miles from Earth. In addition to the table creation, provide commands that perform the following operations:
+
+```
+  CREATE TABLE spacecrafts (
+      id integer,
+      name text,
+      yearLaunched date,
+      homeCountry text,
+      description text,
+      orbitingBody text,
+      currentlyOperating boolean,
+      millionsOfKilometersAway float,
+  );
+```
+
+
+>Add three non-Earth-orbiting satellites to the table.
+Remove one of the satellites from the table since it has just crashed into the planet.
+
+```
+INSERT INTO spacecrafts ( id, name, yearLaunched, homeCountry, description, orbitingBody, currentlyOperating, milesAway)
+VALUES
+(1988058, Phobos 1, 1988, USSR, Unmanned Russian space probe of the Phobos Program launched from Baikonour July 1988 to explore Mars and its moons Phobos and Deimos. Failed Sept 1988 due to computer malfunction. Heaviest interplaneteary spacecraft ever launched at the time weighing 6200kg., Mars, false, 54.6)
+(1974037, Luna 22, 1974, USSR, Unmanned lunar orbiter mission that carried imaging cameras and had objectives of studying the Moon's magnetic field, surface gamma ray emissions, and composition of lunar surface rocks and the gravitational field as well as micrometeorites and cosmic rays., Moon, false, 0.36)
+(1975050, Venera 9, 1975, USSR, Unmanned Soviet space mission to Venus consisting of an orbiter and a lander. First spacecraft to orbit Venus, while the lander was the first to return images from the surface of another planet., Venus, false, 261);
+
+```
+
+```
+DELETE FROM spacecrafts WHERE name=Phobos 1;
+```
+ 
+
+
+>Edit another satellite because it is no longer operating and change the value to reflect that.
+
+All of mine were decommissioned, so let's pretend te Venera 9 was reinstated for a new exploration of the planet.
+
+```
+UPDATE spacecrafts SET currentlyOperating=true WHERE name=Venera 9;
+```
+
+
+>Write a command to create a new table to hold the emails in your inbox. This table should include an id, the subject line, the sender, any additional recipients, the body of the email, the timestamp, whether or not you have read the email, and the id of the email chain it's in. 
+
+```  CREATE TABLE emails (
+      id integer,
+      subject text,
+      sender text,
+      additionalRecipients text,
+      emailBody text,
+      timestamp timestamp,
+      read boolean,
+  );
+```
+>Also provide commands that perform the following operations:
+
+* Add three new emails to the inbox.
+
+INSERT INTO emails (id, subject, sender, additionalRecipients, emailBody, timestamp, read)
+VALUES
+(1, Appointment Tomorrow, Dr. Smith, Secretary, Appointment Reminder: 3/17/2019 2:00pm, 2019-03-16, 13:10:11, true) 
+(2, Meeting Reminder, Principal Wilson, 6th Grade Team, Team Meeting 3/24/2019 5th period, 2019-03-14, 11:28:09, true) 
+(4, Netflix Has Added a New Movie You Might Like!, Netflix, Hidden, Netflix has added a new movie that you might like! Check out The Notebook, now streaming until 3/31/2019!, 2019-03-01 02:01:17, false) ;
+
+```
+* You deleted one of the emails, so write a command to remove the row from the inbox table.
+
+```
+DELETE FROM emails WHERE sender=Netflix;
+
+```
+* You started reading an email but just heard a crash in another room. Mark the email as unread before investigating the crash, so you can come back and read it later.
+
+```
+
+UPDATE emails SET read=false WHERE subject=Appointment Tomorrow;
+
+```
