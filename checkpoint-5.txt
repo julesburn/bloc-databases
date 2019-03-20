@@ -1,0 +1,143 @@
+###Exercises
+
+
+>Write out a generic SELECT statement.
+
+```
+SELECT title
+FROM books
+WHERE title LIKE '%Harry Potter%';
+
+>Create a fun way to remember the order of operations in a SELECT statement, such as a mnemonic.
+
+Order of Operations in SQL:
+
+FROM, WHERE, (NOT)LIKE, AND/OR, then MORE
+
+...and there's like, a little tune that goes with it. This question is a little vague.
+
+>Given this dogs table, write queries to select the following pieces of data:
+
+>Intake teams typically guess the breed of shelter dogs, so the breed column may have multiple words (for example, "Labrador Collie mix").
+
+>Display the name, gender, and age of all dogs that are part Labrador.
+
+```
+SELECT name, gender, age
+FROM dogs
+WHERE breed LIKE '%labrador%';
+```
+
+>Display the ids of all dogs that are under 1 year old.
+
+```
+SELECT id
+FROM dogs
+WHERE age < 1;
+```
+
+>Display the name and age of all dogs that are female and over 35lbs.
+
+```
+SELECT name, age
+FROM dogs
+WHERE gender = 'F' AND weight > 35;
+```
+
+>Display all of the information about all dogs that are not Shepherd mixes.
+
+```
+SELECT id, name, gender, age, weight, breed, intake_date, in_foster
+FROM dogs
+WHERE breed NOT LIKE '%shepherd%';
+```
+
+>Display the id, age, weight, and breed of all dogs that are either over 60lbs or Great Danes.
+
+```
+SELECT id, age, weight, breed
+FROM dogs
+WHERE weight > 60 OR breed LIKE '%great dane%'
+``` 
+
+>Given this cats table, what records are returned from these queries?
+
+```
+SELECT name, adoption_date FROM cats;
+SELECT name, age FROM cats;
+```
+
+    | name     | adoption_date|
+    |----------|--------------|
+    | Mushi    | 2016-03-22   |
+    | Seashell | NULL         |
+    | Azul     | 2016-04-17   |
+    | Victoire | 2016-09-01   |
+    | Nala     | NULL         |
+
+>From the cats table, write queries to select the following pieces of data.
+
+>Display all the information about all of the available cats.
+
+```
+SELECT *
+FROM cats;
+```
+>Display the name and sex of all cats who are 7 years old.
+
+```
+SELECT name, gender
+FROM cats
+WHERE age=7;
+
+>Find all of the names of the cats, so you don’t choose duplicate names for new cats.
+
+```
+SELECT name
+FROM cats;
+```
+
+>List each comparison operator and explain when you would use it. Include a real world example for each.
+
+* equal to = : Used to find when values are equal to one anotehr, like searching for numbers that are equal or strings that match. An example could be searching for a name in a directory.
+
+* not equal to <> : Used to search for values that are not equal to the search value. A user might search a library for books that match their interests with titles that do NOT match a book they've already read.
+
+* greater than > : Search for values that are greater than the input value. A user could search for an animal to adopt that is older than 1 year.
+
+* less than < : Search for values that are less than the input value. A user might search a menu for an item with less calories than a target value.
+
+* greater than or equal to >= : Search for a value that is greater than or equal to the input value. A user might search a dating site for someone who is their age or older.
+
+* less than or equal to <= : Search for a value that is less than or equal to the input value. A user might search a product database for an item that is less than or equal to the price they want to pay.
+
+>From the cats table, what data is returned from these queries?
+
+```
+SELECT name FROM cats WHERE gender = ‘F’;
+```
+
+    | name     |
+    |----------|
+    | Seashell | 
+    | Nala     | 
+
+```
+SELECT name FROM cats WHERE age <> 3;
+```
+
+    | name     |
+    |----------|
+    | Mushi    |
+    | Seashell |
+    | Victoire |
+    | Nala     | 
+
+```
+SELECT ID FROM cats WHERE name != ‘Mushi’ AND gender = ‘M’;
+```
+
+    | id |
+    |----|
+    | 3  | 
+    | 4  |
