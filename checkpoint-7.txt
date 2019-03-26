@@ -1,0 +1,221 @@
+###Exercises
+
+>How do you find related data held in two separate data tables?
+
+Related data in two separate tables can be found using INNER JOIN
+
+>Explain, in your own words, the difference between an INNER JOIN, LEFT OUTER JOIN, and RIGHT OUTER JOIN. Give a real-world example for each.
+
+* INNER JOIN
+
+Combines two tables to make a new table that contains the matching rows from both original tables.
+
+Example: I have a table containing the reading intervention courses that I teach that includes the class names, class ids, and number of students in the class. I have another table with all of the students in the school and their schedules that includes student names, student ids, and the classes they're taking including the class names and class ids. I could use an inner join to display the names of the students who are enrolled in my reading intervention courses.
+
+* LEFT OUTER JOIN
+
+Combines two tables to make a new table that contains all of the rows of the table on the left and the matching rows from the other table.
+
+Example: I have one table that contains every item for sale in my store by name, item number, and price. The second table contains my sales for the month with item names, item numbers, profit, and amount sold. I could use a left outer join to display all of the items that I sell along with the quantities sold.
+ 
+
+* RIGHT OUTER JOIN
+
+Combines two tables to make a new table that contains all of the rows from the table on the right and the matching rows from the other table.
+
+Example: I have one table that has all of my students names, student ids, and homeroom teachers. The other table documents all of the food allergies in the school and includes student names, student ids, and what food they're allergic to. I could use a right outer join to display the full table of allergies and the matching student names displayed corresponding to their allergies.
+
+
+>Define primary key and foreign key. Give a real-world example for each.
+
+A primary key is a unique identifier for each row in a database table. In order to be a primary key, the columns must be unique. No value in the columns can be blank or null. A table has just one primary key. The primary key is stored in an index, which is used to enforce the uniqueness requirement and makes it easy for foreign key values to refer back to the corresponding primary key values.
+
+Example: A primary key is like an address. If rows in a table were mailboxes, the primary key would be the listing of street addresses. 
+
+A foreign key is the primary key of one table that is included as a non-unique attribute in another table. It is a set of one or more columns in a table that refers to the primary key in another table. Unlike primary keys, foreign keys can contain duplicate values. It is also okay for them to contain null values. Indexes aren't automatically created for foreign keys, however they can be defined. A table can contain more than one foreign key.
+
+Example: I have a table that contains customer information, including their first names, last names, and customer ids. I have another table that contains customer contact information, including contact id, customer_id, contact info, and contact type. The foreign key customer_id will reference the id within the customer table.
+
+>Define aliasing.
+
+Aliasing is a technique of creating short variable names, usually a single letter, to replace the table name in a query.
+
+>Change this query so that you are using aliasing:
+
+```
+SELECT professor.name, compensation.salary,
+compensation.vacation_days FROM professor JOIN
+compensation ON professor.id =
+compensation.professor_id;
+```
+
+```
+SELECT p.name, c.salary,c.vacation_days
+FROM professor AS p
+JOIN compensation AS c
+ON p.id = c.professor_id;
+```
+
+>Why would you use a NATURAL JOIN? Give a real-world example.
+
+A NATURAL JOIN is a shorthand form of USING. It forms  USING list consisting only o fthe column names that appear in both input tables. These columns appear only once in the output table. SQL users should be cautious using NATURAL JOIN, however, as it can cause unexpected errors. 
+
+Example: I have a natural join between two tables, Customers and Employees, joining on EmployeeID. The Employee table also has a field labeled ManagerID. In the future, someone else adds a field labeled ManagerID to the Customers table as well. The natural join will not break, but will include a second field that works incorrectly.
+
+>Using this Employee schema and data, write queries to find the following information:
+
+* List all employees and all shifts.
+
+```
+SELECT employees.name, shifts.date, shifts.start_time, shifts.end_time
+FROM employees
+JOIN shifts
+ON employees.id = shifts.id;
+```
+
+>Using this Adoption schema and data, please write queries to retrieve the following information and include the results:
+
+* Create a list of all volunteers. If the volunteer is fostering a dog, include each dog as well.
+
+```
+SELECT volunteers.first_name, volunteers.last_name, dogs.name
+FROM volunteers
+LEFT OUTER JOIN  dogs
+ON volunteers.foster_dog_id = dogs.id;
+```
+
+| first_name | last_name  | name      |
+| ---------- | ---------- | --------- |
+| Rubeus     | Hagrid     | Munchkin  |
+| Marjorie   | Dursley    | Marmaduke |
+| Sirius     | Black      |           |
+| Remus      | Lupin      |           |
+| Albus      | Dumbledore |           |
+
+
+* The cat's name, adopter's name, and adopted date for each cat adopted within the past month to be displayed as part of the "Happy Tail" social media promotion which posts recent successful adoptions.
+
+```
+SELECT cats.name, cat_adoptions.date, adopters.first_name, adopters.last_name
+FROM cats
+INNER JOIN cat_adoptions
+ON cats.id = cat_adoptions.cat_id
+INNER JOIN adopters
+ON cat_adoptions.adopter_id = adopters.id
+WHERE cat_adoptions.date >= (current_date-30);
+
+```
+
+| name     | date                     | first_name | last_name |
+| -------- | ------------------------ | ---------- | --------- |
+| Mushi    | 2019-03-06T00:00:00.000Z | Arabella   | Figg      |
+| Victoire | 2019-03-11T00:00:00.000Z | Argus      | Filch     |
+
+
+* Create a list of adopters who have not yet chosen a dog to adopt.
+
+```
+SELECT adopters.first_name, adopters.last_name
+FROM adopters
+LEFT OUTER JOIN dog_adoptions
+ON adopters.id = dog_adoptions.adopter_id
+WHERE dog_adoptions.adopter_id is NULL;
+
+```
+
+| first_name | last_name |
+| ---------- | --------- |
+| Hermione   | Granger   |
+| Arabella   | Figg      |
+
+
+* Lists of all cats and all dogs who have not been adopted.
+
+```
+SELECT cats.name
+FROM cats
+LEFT JOIN cat_adoptions
+ON cat_adoptions.cat_id = cats.id
+WHERE cat_adoptions.adopter_id is NULL
+UNION
+SELECT dogs.name
+FROM dogs
+LEFT JOIN dog_adoptions
+ON dog_adoptions.dog_id = dogs.id
+WHERE dog_adoptions.adopter_id is NULL;
+
+```
+
+
+| name      |
+| --------- |
+| Lassie    |
+| Boujee    |
+| Marmaduke |
+| Seashell  |
+| Munchkin  |
+| Nala      |
+| Marley    |
+
+
+* The name of the person who adopted Rosco.
+
+```
+SELECT adopters.first_name, adopters.last_name
+FROM adopters
+JOIN dog_adoptions
+ON adopters.id = dog_adoptions.adopter_id
+WHERE dog_adoptions.dog_id = 10007;
+
+```
+
+| first_name | last_name |
+| ---------- | --------- |
+| Argus      | Filch     |
+
+
+>Using this Library schema and data, write queries applying the following scenarios and include the results:
+
+* To determine if the library should buy more copies of a given book, please provide the names and position, in order, of all of the patrons with a hold (request for a book with all copies checked out) on "Advanced Potion-Making".
+
+```
+SELECT patrons.name, books.title
+FROM holds
+JOIN patrons
+ON patrons.id = holds.patron_id
+JOIN books
+ON books.isbn = holds.isbn
+WHERE books.title = 'Advanced Potion-Making';
+```
+
+| name           | title                  |
+| -------------- | ---------------------- |
+| Cedric Diggory | Advanced Potion-Making |
+| Terry Boot     | Advanced Potion-Making |
+
+
+* List all of the library patrons. If they have one or more books checked out, list the books with the patrons.
+
+```
+SELECT patrons.name, books.title
+FROM patrons
+LEFT JOIN transactions
+ON patrons.id = transactions.patron_id
+LEFT JOIN books
+ON books.isbn = transactions.isbn
+WHERE transactions.checked_out_date is NOT NULL
+ORDER BY patrons.name;
+
+```
+
+
+
+| name             | title                                   |
+| ---------------- | --------------------------------------- |
+| Cedric Diggory   | Fantastic Beasts and Where to Find Them |
+| Cho Chang        | Advanced Potion-Making                  |
+| Hermione Granger | Fantastic Beasts and Where to Find Them |
+| Hermione Granger | Hogwarts: A History                     |
+| Padma Patil      | Fantastic Beasts and Where to Find Them |
+| Terry Boot       | Advanced Potion-Making                  |
+| Terry Boot       | Fantastic Beasts and Where to Find Them |
